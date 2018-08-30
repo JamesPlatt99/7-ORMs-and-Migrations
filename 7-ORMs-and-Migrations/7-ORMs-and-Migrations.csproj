@@ -53,6 +53,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\DatabaseObject.cs" />
+    <Compile Include="Models\Employees.cs" />
+    <Compile Include="Models\JobPosition.cs" />
+    <Compile Include="Models\PensionFund.cs" />
+    <Compile Include="Models\PensionFundProvider.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

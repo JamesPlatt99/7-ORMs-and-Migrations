@@ -10,7 +10,10 @@ namespace _7_ORMs_and_Migrations
     {
         static void Main(string[] args)
         {
-
+            var employees = Models.Employees.GetAll();
+            var employee = Models.Employees.GetSingle(employees.First().ID);
+            Console.WriteLine(employee.FirstName);
+            Console.ReadLine();
         }
     }
 }
