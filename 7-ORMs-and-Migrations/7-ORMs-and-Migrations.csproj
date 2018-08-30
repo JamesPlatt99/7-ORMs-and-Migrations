@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataBoard.cs" />
     <Compile Include="Models\DatabaseObject.cs" />
     <Compile Include="Models\Employees.cs" />
     <Compile Include="Models\JobPosition.cs" />
