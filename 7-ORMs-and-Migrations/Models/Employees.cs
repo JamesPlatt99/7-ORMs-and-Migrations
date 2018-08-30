@@ -16,10 +16,46 @@ namespace _7_ORMs_and_Migrations.Models
         public Guid ID { get; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public int JobPositionID { get; set; }
+        public int JobPositionID { get; set; }        
         public Guid? PensionFundID { get; set; }
         public decimal Salary { get; set; }
         public int Age { get; set; }
+
+        private JobPosition _jobPosition;
+        public JobPosition JobPosition
+        {
+            get
+            {
+                if(_jobPosition == null)
+                {
+                    _jobPosition = Models.JobPosition.GetSingle(this.JobPositionID);
+                }
+                return _jobPosition;
+            }
+            set
+            {
+                _jobPosition = value;
+                this.JobPositionID = value.ID;
+            }
+        }
+
+        private PensionFund _pensionFund;
+        public PensionFund PensionFund
+        {
+            get
+            {
+                if (_pensionFund == null && this.PensionFundID != null)
+                {
+                    _pensionFund = Models.PensionFund.GetSingle(this.PensionFundID.Value);
+                }
+                return _pensionFund;
+            }
+            set
+            {
+                _pensionFund = value;
+                this.PensionFundID = value.ID;
+            }
+        }
         #endregion
 
         #region "Static Methods"
