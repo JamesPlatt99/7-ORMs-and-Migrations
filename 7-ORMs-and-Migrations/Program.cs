@@ -10,10 +10,8 @@ namespace _7_ORMs_and_Migrations
     {
         static void Main(string[] args)
         {
-            var dataBoard = new DataBoard();
-            var employees = Models.Employees.GetAll().ToList();
-            dataBoard.DisplayData(employees);
-            Console.ReadLine();
+            var userCommands = new UserCommands();
+            userCommands.Run();
         }
         
     }
