@@ -13,7 +13,7 @@ namespace _7_ORMs_and_Migrations
         const int nameFieldLength = 20;
         const int jobTitleFieldLength = 20;
         const int salaryFieldLength = 12;
-        const int pensionFundContributionsFieldLength = 12;
+        const int pensionFundContributionsFieldLength = 26;
 
         const string nameHeader = "Name";
         const string jobTitleHeader = "Job Title";
@@ -47,15 +47,17 @@ namespace _7_ORMs_and_Migrations
 
         private string GetHorizontalLine()
         {
+            // Total length of the table will be equal to the sum of the field lengths as well as a seperator for each field.
             int numFields = 4;
             int fieldLength = nameFieldLength + jobTitleFieldLength + salaryFieldLength + pensionFundContributionsFieldLength;
-            return String.Join("", Enumerable.Range(1, numFields + fieldLength).Select(n => "-"));
+            int totalLength = numFields + fieldLength - 1;
+            return "|" + String.Join("", Enumerable.Range(0, totalLength).Select(n => "-")) + "|";
         }
 
         private string GetColumns()
         {
             var output = new StringBuilder();
-            output.AppendFormat("{0}|", FormatCell(nameHeader, nameFieldLength));
+            output.AppendFormat("|{0}|", FormatCell(nameHeader, nameFieldLength));
             output.AppendFormat("{0}|", FormatCell(jobTitleHeader, jobTitleFieldLength));
             output.AppendFormat("{0}|", FormatCell(salaryHeader, salaryFieldLength));
             output.AppendFormat("{0}|", FormatCell(pensionFundContributionsHeader, pensionFundContributionsFieldLength));
@@ -70,7 +72,7 @@ namespace _7_ORMs_and_Migrations
             string pensionFundContributions = String.Format("£{0:n}", (employee.PensionFund?.ContributionAmount).GetValueOrDefault(0));
 
             var output = new StringBuilder();
-            output.AppendFormat("{0}|", FormatCell(name, nameFieldLength));
+            output.AppendFormat("|{0}|", FormatCell(name, nameFieldLength));
             output.AppendFormat("{0}|", FormatCell(jobTitle, jobTitleFieldLength));
             output.AppendFormat("{0}|", FormatCell(salary, salaryFieldLength));
             output.AppendFormat("{0}|", FormatCell(pensionFundContributions, pensionFundContributionsFieldLength));
