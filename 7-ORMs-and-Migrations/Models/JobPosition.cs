@@ -4,13 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _7_ORMs_and_Migrations
+namespace _7_ORMs_and_Migrations.Models
 {
-    class Program
+    class JobPosition
     {
-        static void Main(string[] args)
-        {
-
-        }
+        public int ID { get; }
+        public string Title { get; set; }
     }
 }
