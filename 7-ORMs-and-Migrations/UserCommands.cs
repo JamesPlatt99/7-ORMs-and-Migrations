@@ -13,6 +13,7 @@ namespace _7_ORMs_and_Migrations
         {
             ShowData = 1,
             DeleteUser = 2,
+            IncreasePensionFunds = 3,
             Exit = 9
         }
         #endregion
@@ -46,6 +47,9 @@ namespace _7_ORMs_and_Migrations
                 case (int) UserOptions.DeleteUser:
                     DeleteUserOption();
                     break;
+                case (int) UserOptions.IncreasePensionFunds:
+                    IncreasePensionFundsOption();
+                    break;
             }
         }
         private int GetUserInput()
@@ -64,6 +68,12 @@ namespace _7_ORMs_and_Migrations
             Console.WriteLine("Menu");
             Console.WriteLine("----------------");
             Enum.GetValues(typeof(UserOptions)).Cast<UserOptions>().ToList().ForEach(n => Console.WriteLine(String.Format(" {0} - {1}", (int) n, n)));
+        }
+
+        private void IncreasePensionFundsOption()
+        {
+            Models.PensionFund.IncreasePensionFunds();
+            DisplayDataOption();
         }
 
         private void DisplayDataOption()

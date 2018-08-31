@@ -54,7 +54,6 @@ namespace _7_ORMs_and_Migrations.Models
         }
         #endregion
 
-
         #region "Static Methods"
         public static IEnumerable<PensionFund> GetAll()
         {
@@ -71,6 +70,14 @@ namespace _7_ORMs_and_Migrations.Models
                 return connection.Query<PensionFund>(
                   "SELECT * FROM PensionFund WHERE ID = @id",
                   new { id }).Single();
+            }
+        }
+
+        public static void IncreasePensionFunds()
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Execute("Exec dbo.UpdatePensionFundContributions 0.05");
             }
         }
         #endregion
