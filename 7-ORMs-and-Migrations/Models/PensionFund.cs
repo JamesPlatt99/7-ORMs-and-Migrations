@@ -35,6 +35,26 @@ namespace _7_ORMs_and_Migrations.Models
         }
         #endregion
 
+        #region "Public Methods"
+        public void Save()
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+
+            }
+        }
+
+        public void Delete()
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Query<Employees>("DELETE FROM PensionFund WHERE ID = @id"
+                    , new { this.ID });
+            }
+        }
+        #endregion
+
+
         #region "Static Methods"
         public static IEnumerable<PensionFund> GetAll()
         {

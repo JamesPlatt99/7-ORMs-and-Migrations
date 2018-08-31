@@ -58,6 +58,27 @@ namespace _7_ORMs_and_Migrations.Models
         }
         #endregion
 
+        #region "Public Methods"
+        public void Save()
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Query<Employees>("SELECT * FROM Employees");
+            }
+        }
+
+        public void Delete()
+        {
+            // We must first delete the foreign key
+            this.PensionFund?.Delete();
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Query<Employees>("DELETE FROM Employees WHERE ID = @id"
+                    , new { this.ID});
+            }
+        }
+        #endregion
+
         #region "Static Methods"
         public static IEnumerable<Employees> GetAll()
         {

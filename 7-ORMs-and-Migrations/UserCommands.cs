@@ -12,11 +12,13 @@ namespace _7_ORMs_and_Migrations
         private enum UserOptions
         {
             ShowData = 1,
+            DeleteUser = 2,
             Exit = 9
         }
         #endregion
 
         #region "Properties"
+        private List<Models.Employees> _employees;
         #endregion
 
         #region "Public Methods"
@@ -39,14 +41,17 @@ namespace _7_ORMs_and_Migrations
             switch(userInput)
             {
                 case (int) UserOptions.ShowData:
-                    DisplayData();
+                    DisplayDataOption();
+                    break;
+                case (int) UserOptions.DeleteUser:
+                    DeleteUserOption();
                     break;
             }
         }
         private int GetUserInput()
         {
-            int userInput = 0;
-            while(userInput == 0)
+            int userInput = -2;
+            while(userInput == -2)
             {
                 Console.Write(" :");
                 int.TryParse(Console.ReadLine(), out userInput);
@@ -61,11 +66,33 @@ namespace _7_ORMs_and_Migrations
             Enum.GetValues(typeof(UserOptions)).Cast<UserOptions>().ToList().ForEach(n => Console.WriteLine(String.Format(" {0} - {1}", (int) n, n)));
         }
 
-        private void DisplayData()
+        private void DisplayDataOption()
         {
             var dataBoard = new DataBoard();
-            var employees = Models.Employees.GetAll().ToList();
-            dataBoard.DisplayData(employees);
+            _employees = Models.Employees.GetAll().ToList();
+            dataBoard.DisplayData(_employees);
+        }
+
+        private void DeleteUserOption()
+        {
+            DisplayDataOption();
+            Console.WriteLine();
+            Console.WriteLine("Please enter the index of the user you would like to delete or enter -1 to cancel.");
+            int userInput = GetUserInput();
+            if(userInput != -1)
+            {
+                DeleteUser(userInput);
+            }
+        }
+
+        private void DeleteUser(int userIndex)
+        {
+            Models.Employees employee = _employees[userIndex];
+            Console.Write(String.Format("Are you sure you want to delete the user {0} {1}? (y/n)", employee.FirstName, employee.LastName));
+            if(Console.ReadLine().ToUpper() == "Y")
+            {
+                employee.Delete();
+            }
         }
         #endregion
     }
