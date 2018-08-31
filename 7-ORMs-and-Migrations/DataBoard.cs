@@ -75,7 +75,7 @@ namespace _7_ORMs_and_Migrations
             string name = String.Format("{0} {1}", employee.FirstName, employee.LastName);
             string jobTitle = employee.JobPosition.Title;
             string salary = String.Format("£{0:n}", employee.Salary);
-            string pensionFundContributions = String.Format("£{0:n}", (employee.PensionFund?.ContributionAmount).GetValueOrDefault(0));
+            string pensionFundContributions = employee.PensionFund?.ContributionAmount.ToString("£##,#.00") ?? "N/A";
 
             var output = new StringBuilder();
             output.AppendFormat("|{0}|", FormatCell(index, indexFieldLength));
