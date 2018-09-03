@@ -20,6 +20,7 @@ namespace _7_ORMs_and_Migrations
 
         #region "Properties"
         private List<Models.Employees> _employees;
+        private List<Models.EmployeePensionData> _employeePensionData;
         #endregion
 
         #region "Public Methods"
@@ -79,8 +80,10 @@ namespace _7_ORMs_and_Migrations
         private void DisplayDataOption()
         {
             var dataBoard = new DataBoard();
-            _employees = Models.Employees.GetAll().ToList();
-            dataBoard.DisplayData(_employees);
+            //_employees = Models.Employees.GetAll().ToList();
+            //dataBoard.DisplayData(_employees);
+            _employeePensionData = Models.EmployeePensionData.GetEmployeePensionDataView().ToList();
+            dataBoard.DisplayData(_employeePensionData);
         }
 
         private void DeleteUserOption()
@@ -97,12 +100,25 @@ namespace _7_ORMs_and_Migrations
 
         private void DeleteUser(int userIndex)
         {
-            Models.Employees employee = _employees[userIndex];
+            Models.Employees employee = GetEmployeeAtIndex(userIndex);
             Console.Write(String.Format("Are you sure you want to delete the user {0} {1}? (y/n)", employee.FirstName, employee.LastName));
             if(Console.ReadLine().ToUpper() == "Y")
             {
                 employee.Delete();
             }
+        }
+
+        private Models.Employees GetEmployeeAtIndex(int i)
+        {
+            if(_employees != null && i < _employees.Count)
+            {
+                return _employees[i];
+            }
+            if(_employeePensionData != null && i < _employeePensionData.Count)
+            {
+                return _employeePensionData[i].Employee;
+            }
+            return null;
         }
         #endregion
     }
