@@ -101,10 +101,13 @@ namespace _7_ORMs_and_Migrations
         private void DeleteUser(int userIndex)
         {
             Models.Employees employee = GetEmployeeAtIndex(userIndex);
-            Console.Write(String.Format("Are you sure you want to delete the user {0} {1}? (y/n)", employee.FirstName, employee.LastName));
-            if(Console.ReadLine().ToUpper() == "Y")
+            if(employee != null)
             {
-                employee.Delete();
+                Console.Write(String.Format("Are you sure you want to delete the user {0} {1}? (y/n)", employee.FirstName, employee.LastName));
+                if(Console.ReadLine().ToUpper() == "Y")
+                {
+                    employee.Delete();
+                }
             }
         }
 
