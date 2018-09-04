@@ -24,7 +24,7 @@ namespace Migrations
         {
             Delete.ForeignKey("FK_Employees_Hobby").OnTable("Employees");
             Delete.Column("HobbyID").FromTable("Employees");
-            Delete.Table("Hobbies");
+            Delete.Table("Hobby");
         }
     }
 }
