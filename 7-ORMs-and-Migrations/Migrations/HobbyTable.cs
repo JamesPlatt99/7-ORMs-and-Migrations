@@ -4,7 +4,7 @@ using FluentMigrator;
 namespace Migrations
 {
     [Migration(20180409125943)]
-    public class Test : Migration
+    public class HobbyTable : Migration
     {
         public override void Up()
         {
