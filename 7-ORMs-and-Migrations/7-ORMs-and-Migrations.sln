@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28010.2016
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "7-ORMs-and-Migrations", "7-ORMs-and-Migrations.csproj", "{D5E05B25-969F-4329-A862-9727B137E664}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Migrations", "Migrations\Migrations.csproj", "{1AEA70AA-6E8A-4CF4-8A8B-FE02872F4B6D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{D5E05B25-969F-4329-A862-9727B137E664}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5E05B25-969F-4329-A862-9727B137E664}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5E05B25-969F-4329-A862-9727B137E664}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AEA70AA-6E8A-4CF4-8A8B-FE02872F4B6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AEA70AA-6E8A-4CF4-8A8B-FE02872F4B6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AEA70AA-6E8A-4CF4-8A8B-FE02872F4B6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AEA70AA-6E8A-4CF4-8A8B-FE02872F4B6D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
