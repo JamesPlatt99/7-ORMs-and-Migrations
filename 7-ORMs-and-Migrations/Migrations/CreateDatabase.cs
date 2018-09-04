@@ -9,9 +9,9 @@ namespace Migrations
         public override void Up()
         {
             Create.Table("Employees")
-              .WithColumn("Id").AsGuid().NotNullable().PrimaryKey()
-              .WithColumn("First Name").AsString().Nullable()
-              .WithColumn("Last Name").AsString().NotNullable()
+              .WithColumn("Id").AsGuid().NotNullable().PrimaryKey().WithDefault(SystemMethods.NewGuid)
+              .WithColumn("FirstName").AsString().Nullable()
+              .WithColumn("LastName").AsString().NotNullable()
               .WithColumn("Salary").AsDecimal().NotNullable()
               .WithColumn("Age").AsInt32().NotNullable();
 
@@ -23,9 +23,9 @@ namespace Migrations
               .ForeignKey("FK_Employees_JobPosition", "JobPosition", "ID");
 
             Create.Table("PensionFund")
-                .WithColumn("ID").AsGuid().NotNullable().PrimaryKey()
+                .WithColumn("ID").AsGuid().NotNullable().PrimaryKey().WithDefault(SystemMethods.NewGuid)
                 .WithColumn("ContributionAmount").AsDecimal().NotNullable()
-                .WithColumn("LastContributionDate").AsDate().NotNullable();
+                .WithColumn("LastContributionDate").AsDate().Nullable();
 
             Create.Column("PensionFundID").OnTable("Employees").AsGuid().Nullable()
               .ForeignKey("FK_Employees_PensionFund", "PensionFund", "ID");
