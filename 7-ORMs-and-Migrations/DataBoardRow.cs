@@ -37,7 +37,7 @@ namespace _7_ORMs_and_Migrations
             this.JobTitle = employeeDataRow.GetJobTitle();
             this.Salary = employeeDataRow.GetSalary();
             this.Employee = employeeDataRow.GetEmployee();
-            this.PensionFundContributions = this.Employee.PensionFund.ContributionAmount;
+            this.PensionFundContributions = employeeDataRow.GetPensionFundContributions();
         }
 
         public void PrintLine()
