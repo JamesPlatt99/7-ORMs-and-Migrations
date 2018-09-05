@@ -10,7 +10,7 @@ using Dapper.Mapper;
 
 namespace _7_ORMs_and_Migrations.Models
 {
-    class Employees : DataBaseObject
+    class Employees : DataBaseObject, IDataboardObject
     {
         #region "Properties"
         public Guid ID { get; }
@@ -97,6 +97,14 @@ namespace _7_ORMs_and_Migrations.Models
                   new { id }).Single();
             }
         }
+        #endregion
+
+        #region "Interface Members"
+        public string GetName() => String.Format("{0} {1}", this.FirstName, this.LastName);
+        public string GetJobTitle() => this.JobPosition.Title;
+        public decimal GetSalary() => this.Salary;
+        public Employees GetEmployee() => this;
+        public decimal? GetPensionFundContributions() => this.PensionFund?.ContributionAmount;
         #endregion
     }
 }
