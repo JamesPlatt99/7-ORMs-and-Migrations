@@ -12,14 +12,110 @@ namespace _7_ORMs_and_Migrations.Models
 {
     class Employees : DataBaseObject, IDataboardObject
     {
-        #region "Properties"
+        #region "Properties"       
         public Guid ID { get; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public int JobPositionID { get; set; }        
-        public Guid? PensionFundID { get; set; }
-        public decimal Salary { get; set; }
-        public int Age { get; set; }
+
+        private string FirstName;
+        public string EmployeeFirstName
+        {
+            get
+            {
+                return FirstName;
+            }
+            set
+            {
+                if(FirstName != value)
+                {
+                    FirstName = value;
+                    ValueUpdated("FirstName", value);
+                }
+            }
+        }
+
+        private string LastName;
+        public string EmployeeLastName
+        {
+            get
+            {
+                return LastName;
+            }
+            set
+            {
+                if (LastName != value)
+                {
+                    LastName = value;
+                    ValueUpdated("LastName", value);
+                }
+            }
+        }
+
+        private int JobPositionID;
+        public int EmployeeJobPositionID
+        {
+            get
+            {
+                return JobPositionID;
+            }
+            set
+            {
+                if (JobPositionID != value)
+                {
+                    JobPositionID = value;
+                    ValueUpdated("JobPositionID", value.ToString());
+                }
+            }
+        }
+
+        private Guid? PensionFundID;
+        public Guid? EmployeePensionFundID
+        {
+            get
+            {
+                return PensionFundID;
+            }
+            set
+            {
+                if (PensionFundID != value)
+                {
+                    PensionFundID = value;
+                    ValueUpdated("PensionFundID", value.ToString());
+                }
+            }
+        }
+
+        private decimal Salary;
+        public decimal EmployeeSalary
+        {
+            get
+            {
+                return Salary;
+            }
+            set
+            {
+                if (Salary != value)
+                {
+                    Salary = value;
+                    ValueUpdated("Salary", value.ToString());
+                }
+            }
+        }
+        private int Age;
+        public int EmployeeAge
+        {
+            get
+            {
+                return Age;
+            }
+            set
+            {
+                if (Age != value)
+                {
+                    Age = value;
+                    ValueUpdated("Age", value.ToString());
+                }
+            }
+        }
+
 
         private JobPosition _jobPosition;
         public JobPosition JobPosition
@@ -28,14 +124,14 @@ namespace _7_ORMs_and_Migrations.Models
             {
                 if(_jobPosition == null)
                 {
-                    _jobPosition = Models.JobPosition.GetSingle(this.JobPositionID);
+                    _jobPosition = Models.JobPosition.GetSingle(this.EmployeeJobPositionID);
                 }
                 return _jobPosition;
             }
             set
             {
                 _jobPosition = value;
-                this.JobPositionID = value.ID;
+                this.EmployeeJobPositionID = value.ID;
             }
         }
 
@@ -44,16 +140,16 @@ namespace _7_ORMs_and_Migrations.Models
         {
             get
             {
-                if (_pensionFund == null && this.PensionFundID != null)
+                if (_pensionFund == null && this.EmployeePensionFundID != null)
                 {
-                    _pensionFund = Models.PensionFund.GetSingle(this.PensionFundID.Value);
+                    _pensionFund = Models.PensionFund.GetSingle(this.EmployeePensionFundID.Value);
                 }
                 return _pensionFund;
             }
             set
             {
                 _pensionFund = value;
-                this.PensionFundID = value.ID;
+                this.EmployeePensionFundID = value.ID;
             }
         }
         #endregion
@@ -61,9 +157,14 @@ namespace _7_ORMs_and_Migrations.Models
         #region "Public Methods"
         public void Save()
         {
-            throw new NotImplementedException();
-            using (var connection = new SqlConnection(_connectionString))
+            var updateString = GetUpdatedValuesQueryString();
+            if (!string.IsNullOrWhiteSpace(updateString))
             {
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    connection.Query<Employees>(String.Format("UPDATE Employees SET {0} WHERE ID = @id", updateString)
+                        , new { this.ID });
+                }
             }
         }
 
@@ -100,9 +201,9 @@ namespace _7_ORMs_and_Migrations.Models
         #endregion
 
         #region "Interface Members"
-        public string GetName() => String.Format("{0} {1}", this.FirstName, this.LastName);
+        public string GetName() => String.Format("{0} {1}", this.EmployeeFirstName, this.EmployeeLastName);
         public string GetJobTitle() => this.JobPosition.Title;
-        public decimal GetSalary() => this.Salary;
+        public decimal GetSalary() => this.EmployeeSalary;
         public Employees GetEmployee() => this;
         public decimal? GetPensionFundContributions() => this.PensionFund?.ContributionAmount;
         #endregion

@@ -14,6 +14,7 @@ namespace _7_ORMs_and_Migrations
             ShowData = 1,
             DeleteUser = 2,
             IncreasePensionFunds = 3,
+            UpdateName = 4,
             Exit = 9
         }
         #endregion
@@ -49,6 +50,9 @@ namespace _7_ORMs_and_Migrations
                     break;
                 case (int) UserOptions.IncreasePensionFunds:
                     IncreasePensionFundsOption();
+                    break;
+                case (int) UserOptions.UpdateName:
+                    UpdateNameOption();
                     break;
             }
         }
@@ -88,28 +92,62 @@ namespace _7_ORMs_and_Migrations
 
         private void DeleteUserOption()
         {
-            DisplayDataOption();
             Console.WriteLine();
-            Console.WriteLine("Please enter the index of the user you would like to delete or enter -1 to cancel.");
-            int userInput = GetUserInput();
-            if(userInput != -1)
+            var employee = UserSelectEmployee();
+            if(employee != null)
             {
-                DeleteUser(userInput);
+                DeleteUser(employee);
             }
         }
 
-        private void DeleteUser(int userIndex)
+        private void UpdateNameOption()
         {
-            Models.Employees employee = GetEmployeeAtIndex(userIndex);
+            var employee = UserSelectEmployee();
             if(employee != null)
             {
-                Console.Write(String.Format("Are you sure you want to delete the user {0} {1}? (y/n)", employee.FirstName, employee.LastName));
+                string newName = GetName();
+                employee.EmployeeFirstName = newName.Split()[0];
+                employee.EmployeeLastName = newName.Split()[1];
+                employee.Save();
+            }
+        }
+
+        private string GetName()
+        {
+            var name = string.Empty;
+            while (name.Split(' ').Count() != 2)
+            {
+                Console.WriteLine("Name must consist of a first and last name only");
+                Console.Write("   New name: ");
+                name = Console.ReadLine();
+            }
+            return name;
+        }
+
+        private void DeleteUser(Models.Employees employee)
+        { 
+            if(employee != null)
+            {
+                Console.Write(String.Format("Are you sure you want to delete the user {0} {1}? (y/n)", employee.EmployeeFirstName, employee.EmployeeLastName));
                 if(Console.ReadLine().ToUpper() == "Y")
                 {
                     employee.Delete();
                 }
             }
         }
+
+        private Models.Employees UserSelectEmployee()
+        {
+            DisplayDataOption();
+            Console.WriteLine("Please enter the index of the user you would like to delete or enter -1 to cancel.");
+            Console.WriteLine();
+            int userInput = GetUserInput();
+            if(userInput > 0)
+            {
+                return GetEmployeeAtIndex(userInput);
+            }
+            return null;
+        } 
 
         private Models.Employees GetEmployeeAtIndex(int i)
         {

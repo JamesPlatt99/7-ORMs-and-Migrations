@@ -45,7 +45,7 @@ namespace _7_ORMs_and_Migrations.Models
         #region "Interface Members"
         public string GetName() => this.EmployeeName;
         public string GetJobTitle() => this.Employee.JobPosition.Title;
-        public decimal GetSalary() => this.Employee.Salary;
+        public decimal GetSalary() => this.Employee.EmployeeSalary;
         public Employees GetEmployee() => this.Employee;
         public decimal? GetPensionFundContributions() => this.Employee.PensionFund?.ContributionAmount;        
         #endregion
