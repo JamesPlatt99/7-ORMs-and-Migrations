@@ -19,8 +19,7 @@ namespace _7_ORMs_and_Migrations
         #endregion
 
         #region "Properties"
-        private List<Models.Employees> _employees;
-        private List<Models.EmployeePensionData> _employeePensionData;
+        private List<Models.IDataboardObject> _rowData;
         #endregion
 
         #region "Public Methods"
@@ -80,10 +79,11 @@ namespace _7_ORMs_and_Migrations
         private void DisplayDataOption()
         {
             var dataBoard = new DataBoard();
-            //_employees = Models.Employees.GetAll().ToList();
-            //dataBoard.DisplayData(_employees);
-            _employeePensionData = Models.EmployeePensionData.GetEmployeePensionDataView().ToList();
-            dataBoard.DisplayData(_employeePensionData);
+            var rowData = new List<Models.IDataboardObject>();
+            //rowData.AddRange(Models.EmployeePensionData.GetEmployeePensionDataView());
+            rowData.AddRange(Models.Employees.GetAll());
+            _rowData = rowData;
+            dataBoard.DisplayData(rowData);
         }
 
         private void DeleteUserOption()
@@ -113,13 +113,9 @@ namespace _7_ORMs_and_Migrations
 
         private Models.Employees GetEmployeeAtIndex(int i)
         {
-            if(_employees != null && i < _employees.Count)
+            if(_rowData != null && i < _rowData.Count)
             {
-                return _employees[i];
-            }
-            if(_employeePensionData != null && i < _employeePensionData.Count)
-            {
-                return _employeePensionData[i].Employee;
+                return _rowData[i].GetEmployee();
             }
             return null;
         }

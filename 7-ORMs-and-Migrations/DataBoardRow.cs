@@ -8,7 +8,7 @@ namespace _7_ORMs_and_Migrations
 {
     class DataBoardRow
     {
-        #region "Properties
+        #region "Properties"
         const int indexFieldLength = 5;
         const int nameFieldLength = 20;
         const int jobTitleFieldLength = 20;
@@ -25,34 +25,26 @@ namespace _7_ORMs_and_Migrations
         public string Name { get; set; }
         public string JobTitle { get; set; }
         public decimal Salary { get; set; }
-        public decimal PensionFundContributions { get; set; }
+        public decimal? PensionFundContributions { get; set; }
         public Models.Employees Employee { get; set; }
         #endregion
 
         #region "Public Methods"
-        public DataBoardRow(Models.Employees employee, int index)
+        public DataBoardRow(Models.IDataboardObject employeeDataRow, int index)
         {
             this.Index = index;
-            this.Name = String.Format("{0} {1}", employee.FirstName, employee.LastName);
-            this.JobTitle = employee.JobPosition.Title;
-            this.Salary = employee.Salary;
+            this.Name = employeeDataRow.GetName();
+            this.JobTitle = employeeDataRow.GetJobTitle();
+            this.Salary = employeeDataRow.GetSalary();
+            this.Employee = employeeDataRow.GetEmployee();
             this.PensionFundContributions = this.Employee.PensionFund.ContributionAmount;
-            this.Employee = employee;
         }
-        public DataBoardRow(Models.EmployeePensionData employeePensionDataView, int index)
-        {
-            this.Index = index;
-            this.Name = employeePensionDataView.EmployeeName;
-            this.Employee = employeePensionDataView.Employee;
-            this.JobTitle = this.Employee.JobPosition.Title;
-            this.Salary = this.Employee.Salary;
-            this.PensionFundContributions = employeePensionDataView.PensionFundSize;
-        }
+
         public void PrintLine()
         {
             string rowIndex = this.Index.ToString();
             string rowSalary = String.Format("£{0:n}", this.Salary);
-            string rowPensionFundContributions = this.PensionFundContributions.ToString("£##,#.00") ?? "N/A";
+            string rowPensionFundContributions = this.PensionFundContributions?.ToString("£##,#.00") ?? "N/A";
 
             var output = new StringBuilder();
             output.AppendFormat("|{0}|", FormatCell(rowIndex, indexFieldLength));

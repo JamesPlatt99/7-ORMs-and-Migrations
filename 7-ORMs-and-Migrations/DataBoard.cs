@@ -15,14 +15,7 @@ namespace _7_ORMs_and_Migrations
 
         #region "Public Methods"
 
-        public void DisplayData(List<Models.Employees> employees)
-        {
-            DataBoardRow.PrintHeader();
-            PopulateRows(employees);
-            PrintBody();
-        }
-
-        public void DisplayData(List<Models.EmployeePensionData> employees)
+        public void DisplayData(List<Models.IDataboardObject> employees)
         {
             DataBoardRow.PrintHeader();
             PopulateRows(employees);
@@ -31,17 +24,9 @@ namespace _7_ORMs_and_Migrations
         #endregion
 
         #region "Private Methods"
-        private void PopulateRows(List<Models.Employees> employees)
+        private void PopulateRows(List<Models.IDataboardObject> employees)
         {
             for(int i = 0; i < employees.Count; i++)
-            {
-                Rows.Add(new DataBoardRow(employees[i], i));
-            }
-        }
-
-        private void PopulateRows(List<Models.EmployeePensionData> employees)
-        {
-            for (int i = 0; i < employees.Count; i++)
             {
                 Rows.Add(new DataBoardRow(employees[i], i));
             }
