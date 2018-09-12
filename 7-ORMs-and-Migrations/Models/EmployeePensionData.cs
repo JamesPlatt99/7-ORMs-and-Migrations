@@ -39,6 +39,17 @@ namespace _7_ORMs_and_Migrations.Models
                 return connection.Query<EmployeePensionData>(
                   "SELECT * FROM EmployeePensionData");
             }
+        }        
+
+        public static IEnumerable<EmployeePensionData> SearchByPensionFundProvider(string pensionFundProvider)
+        {
+            string query = LikeQuery(pensionFundProvider);
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                return connection.Query<EmployeePensionData>(
+                  "SELECT * FROM EmployeePensionData WHERE PensionFundProvider LIKE @query",
+                  new { query });
+            }
         }
         #endregion
 

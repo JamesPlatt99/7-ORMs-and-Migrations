@@ -50,26 +50,16 @@ namespace _7_ORMs_and_Migrations.UserCommandOptions
         private int GetNextPage()
         {
             DisplayOptions();
-            int userInput = GetUserInput();
+            string userInput = Console.ReadLine();
             switch (userInput)
             {
-                case 1:
+                case "1":
                     return Math.Max(0, curPage - 1);
-                case 2:
+                case "2":
                     return curPage + 1;
                 default:
                     return -1;
             }    
-        }
-        private int GetUserInput()
-        {
-            int userInput = -1;
-            while (userInput == -1)
-            {
-                Console.Write(" :");
-                int.TryParse(Console.ReadLine(), out userInput);
-            }
-            return userInput;
         }
     }
 }

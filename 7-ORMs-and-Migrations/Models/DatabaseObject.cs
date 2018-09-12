@@ -13,6 +13,12 @@ namespace _7_ORMs_and_Migrations.Models
     {
         private Dictionary<string, string> _updates;
 
+        protected static string LikeQuery(string query)
+        {
+            query = query.Replace("[", "[[]").Replace("%", "[%]");
+            return string.Format("%{0}%", query);
+        }
+
         protected static readonly string _connectionString =
           new SqlConnectionStringBuilder
           {

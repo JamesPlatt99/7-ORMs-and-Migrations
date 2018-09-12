@@ -15,6 +15,7 @@ namespace _7_ORMs_and_Migrations
             DeleteUser = 2,
             IncreasePensionFunds = 3,
             UpdateName = 4,
+            Search = 5,
             Exit = 9
         }
         #endregion
@@ -50,6 +51,9 @@ namespace _7_ORMs_and_Migrations
                     break;
                 case (int) UserOptions.UpdateName:
                     userCommandOption = new UserCommandOptions.UpdateEmployeeNameOption();
+                    break;
+                case (int) UserOptions.Search:
+                    userCommandOption = new UserCommandOptions.SearchUserCommand();
                     break;
             }
             userCommandOption?.Run();

@@ -99,6 +99,7 @@
     <Compile Include="UserCommandOptions\DisplayDataboardOption.cs" />
     <Compile Include="UserCommandOptions\IncreasePensionFundsOption.cs" />
     <Compile Include="UserCommandOptions\IUserCommandOption.cs" />
+    <Compile Include="UserCommandOptions\SearchUserCommand.cs" />
     <Compile Include="UserCommandOptions\UpdateEmployeeNameOption.cs" />
     <Compile Include="UserCommands.cs" />
   </ItemGroup>

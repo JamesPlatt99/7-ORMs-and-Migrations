@@ -198,6 +198,28 @@ namespace _7_ORMs_and_Migrations.Models
             }
         }
 
+        public static IEnumerable<Employees> SearchByJobTitle(string jobPosition)
+        {
+            string query = LikeQuery(jobPosition);
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                return connection.Query<Employees>(
+                  "SELECT e.* FROM Employees AS e JOIN JobPosition AS jp ON jp.ID = e.JobPositionID WHERE jp.Title LIKE @query",
+                  new { query });
+            }
+        }
+
+        public static IEnumerable<Employees> SearchByName(string name)
+        {
+            string query = LikeQuery(name);
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                return connection.Query<Employees>(
+                  "SELECT * FROM Employees WHERE FirstName + ' ' + LastName LIKE @query",
+                  new { query });
+            }
+        }
+
         public static Employees GetSingle(Guid id)
         {
             using (var connection = new SqlConnection(_connectionString))
