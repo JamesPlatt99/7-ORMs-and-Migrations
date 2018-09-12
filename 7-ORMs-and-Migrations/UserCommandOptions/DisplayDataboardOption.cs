@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace _7_ORMs_and_Migrations.UserCommandOptions
 {
-    class DisplayDataboardOption : IUserCommandOption
+    class DisplayDataboardOption : BaseUserCommand, IUserCommandOption
     {
         private const int _pageLength = 10;
         private int curPage;
@@ -33,7 +33,7 @@ namespace _7_ORMs_and_Migrations.UserCommandOptions
         {
             var rowData = new List<Models.IDataboardObject>();
             rowData.AddRange(Models.Employees.GetNAfterIndex(_pageLength, curPage * _pageLength));
-            UserCommands.RowData = rowData;
+            RowData = rowData;
             return rowData;
         }
 
