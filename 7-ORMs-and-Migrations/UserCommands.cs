@@ -20,7 +20,7 @@ namespace _7_ORMs_and_Migrations
         #endregion
 
         #region "Properties"
-        private List<Models.IDataboardObject> _rowData;
+        public static List<Models.IDataboardObject> RowData { get; set; }
         #endregion
 
         #region "Public Methods"
@@ -40,10 +40,11 @@ namespace _7_ORMs_and_Migrations
         #region "Private Methods"
         private void DoWhatTheUserSaid(int userInput)
         {
+            UserCommandOptions.IUserCommandOption userCommandOption = null;
             switch(userInput)
             {
                 case (int) UserOptions.ShowData:
-                    DisplayDataOption();
+                    userCommandOption = new UserCommandOptions.DisplayDataboardOption();
                     break;
                 case (int) UserOptions.DeleteUser:
                     DeleteUserOption();
@@ -55,6 +56,7 @@ namespace _7_ORMs_and_Migrations
                     UpdateNameOption();
                     break;
             }
+            userCommandOption?.Run();
         }
         private int GetUserInput()
         {
@@ -77,17 +79,13 @@ namespace _7_ORMs_and_Migrations
         private void IncreasePensionFundsOption()
         {
             Models.PensionFund.IncreasePensionFunds();
-            DisplayDataOption();
+            DisplayData();
         }
 
-        private void DisplayDataOption()
+        private void DisplayData()
         {
-            var dataBoard = new DataBoard();
-            var rowData = new List<Models.IDataboardObject>();
-            //rowData.AddRange(Models.EmployeePensionData.GetEmployeePensionDataView());
-            rowData.AddRange(Models.Employees.GetAll());
-            _rowData = rowData;
-            dataBoard.DisplayData(rowData);
+            var displayDataOption = new UserCommandOptions.DisplayDataboardOption();
+            displayDataOption.Run();
         }
 
         private void DeleteUserOption()
@@ -138,7 +136,7 @@ namespace _7_ORMs_and_Migrations
 
         private Models.Employees UserSelectEmployee()
         {
-            DisplayDataOption();
+            DisplayData();
             Console.WriteLine("Please enter the index of the user you would like to delete or enter -1 to cancel.");
             Console.WriteLine();
             int userInput = GetUserInput();
@@ -151,9 +149,9 @@ namespace _7_ORMs_and_Migrations
 
         private Models.Employees GetEmployeeAtIndex(int i)
         {
-            if(_rowData != null && i < _rowData.Count)
+            if(RowData != null && i < RowData.Count)
             {
-                return _rowData[i].GetEmployee();
+                return RowData[i].GetEmployee();
             }
             return null;
         }

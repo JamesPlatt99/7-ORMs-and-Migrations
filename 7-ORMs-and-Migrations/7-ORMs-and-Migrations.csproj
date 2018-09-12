@@ -94,6 +94,8 @@
     <Compile Include="Models\PensionFundProvider.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserCommandOptions\DisplayDataboardOption.cs" />
+    <Compile Include="UserCommandOptions\IUserCommandOption.cs" />
     <Compile Include="UserCommands.cs" />
   </ItemGroup>
   <ItemGroup>
