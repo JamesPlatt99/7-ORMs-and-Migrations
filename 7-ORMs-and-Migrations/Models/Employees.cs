@@ -189,6 +189,15 @@ namespace _7_ORMs_and_Migrations.Models
             }
         }
 
+        public static IEnumerable<Employees> GetNAfterIndex(int count, int index)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                return connection.Query<Employees>("SELECT * FROM Employees ORDER BY Id OFFSET @index ROWS FETCH NEXT @count ROWS ONLY; ",
+                    new { index, count });
+            }
+        }
+
         public static Employees GetSingle(Guid id)
         {
             using (var connection = new SqlConnection(_connectionString))
