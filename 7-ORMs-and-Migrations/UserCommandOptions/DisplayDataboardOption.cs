@@ -22,7 +22,7 @@ namespace _7_ORMs_and_Migrations.UserCommandOptions
 
         }
 
-        private void DisplayData()
+        new private void DisplayData()
         {
             var dataBoard = new DataBoard();
             var data = GetData();
@@ -32,7 +32,7 @@ namespace _7_ORMs_and_Migrations.UserCommandOptions
         private List<Models.IDataboardObject> GetData()
         {
             var rowData = new List<Models.IDataboardObject>();
-            rowData.AddRange(Models.Employees.GetNAfterIndex(_pageLength, curPage * _pageLength));
+            rowData.AddRange(Models.EmployeeOverview.GetNAfterIndex(_pageLength, curPage * _pageLength));
             RowData = rowData;
             return rowData;
         }

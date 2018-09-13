@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,18 +42,22 @@ namespace _7_ORMs_and_Migrations.UserCommandOptions
             var output = new List<Models.IDataboardObject>();
             int userInput = GetUserInput();
             string query = GetUserQueryText();
+            var timer = new Stopwatch();
+            timer.Start();
             switch(userInput)
             {
                 case (int)SearchOptions.JobTitle:
-                    output.AddRange(Models.Employees.SearchByJobTitle(query));
+                    output.AddRange(Models.EmployeeOverview.SearchByJobTitle(query));
                     break;
                 case (int)SearchOptions.Name:
-                    output.AddRange(Models.Employees.SearchByName(query));
+                    output.AddRange(Models.EmployeeOverview.SearchByName(query));
                     break;
                 case (int)SearchOptions.PensionFundProvider:
                     output.AddRange(Models.EmployeePensionData.SearchByPensionFundProvider(query));
                     break;
             }
+            timer.Stop();
+            Console.WriteLine(String.Format("{0:N}", timer.ElapsedMilliseconds));
             return output;
         }
 

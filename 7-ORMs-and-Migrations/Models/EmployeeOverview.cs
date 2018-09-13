@@ -8,13 +8,14 @@ using System.Threading.Tasks;
 
 namespace _7_ORMs_and_Migrations.Models
 {
-    class EmployeePensionData : DataBaseObject, IDataboardObject
+    class EmployeeOverview : DataBaseObject, IDataboardObject
     {
         #region "Properties"
         public Guid EmployeeNumber { get; }
         public string EmployeeName { get; }
+        public string JobTitle { get; }
+        public decimal Salary { get; }
         public Decimal PensionFundSize { get; }
-        public string PensionFundProvider { get; }
 
         private Employees _employee;
         public Employees Employee
@@ -32,44 +33,52 @@ namespace _7_ORMs_and_Migrations.Models
 
         #region "Static Methods"
 
-        public static IEnumerable<EmployeePensionData> GetEmployeePensionDataView()
+        public static IEnumerable<EmployeeOverview> GetEmployeePensionDataView()
         {
             using (var connection = new SqlConnection(_connectionString))
             {
-                return connection.Query<EmployeePensionData>(
-                  "SELECT * FROM EmployeePensionData");
+                return connection.Query<EmployeeOverview>(
+                  "SELECT * FROM EmployeeOverview");
             }
         }
-        
-        public static IEnumerable<EmployeePensionData> SearchByName(string name)
+
+        public static IEnumerable<EmployeeOverview> SearchByName(string name)
         {
             string query = LikeQuery(name);
             using (var connection = new SqlConnection(_connectionString))
             {
-                return connection.Query<EmployeePensionData>(
-                  "SELECT * FROM EmployeePensionData WHERE EmployeeName LIKE @query",
+                return connection.Query<EmployeeOverview>(
+                  "SELECT * FROM EmployeeOverview WHERE EmployeeName LIKE @query",
                   new { query });
             }
         }
 
-        public static IEnumerable<EmployeePensionData> SearchByPensionFundProvider(string pensionFundProvider)
+        public static IEnumerable<EmployeeOverview> SearchByJobTitle(string jobTitle)
         {
-            string query = LikeQuery(pensionFundProvider);
+            string query = LikeQuery(jobTitle);
             using (var connection = new SqlConnection(_connectionString))
             {
-                return connection.Query<EmployeePensionData>(
-                  "SELECT * FROM EmployeePensionData WHERE PensionFundProvider LIKE @query",
+                return connection.Query<EmployeeOverview>(
+                  "SELECT * FROM EmployeeOverview WHERE JobTitle LIKE @query",
                   new { query });
+            }
+        }
+        public static IEnumerable<EmployeeOverview> GetNAfterIndex(int count, int index)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                return connection.Query<EmployeeOverview>("SELECT * FROM EmployeeOverview ORDER BY EmployeeNumber OFFSET @index ROWS FETCH NEXT @count ROWS ONLY; ",
+                    new { index, count });
             }
         }
         #endregion
 
         #region "Interface Members"
         public string GetName() => this.EmployeeName;
-        public string GetJobTitle() => this.Employee.JobPosition.Title;
-        public decimal GetSalary() => this.Employee.EmployeeSalary;
+        public string GetJobTitle() => this.JobTitle;
+        public decimal GetSalary() => this.Salary;
+        public decimal? GetPensionFundContributions() => this.PensionFundSize;
         public Employees GetEmployee() => this.Employee;
-        public decimal? GetPensionFundContributions() => this.Employee.PensionFund?.ContributionAmount;        
         #endregion
     }
 }

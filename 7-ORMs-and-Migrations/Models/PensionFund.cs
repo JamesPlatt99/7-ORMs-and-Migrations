@@ -39,10 +39,6 @@ namespace _7_ORMs_and_Migrations.Models
         public void Save()
         {
             throw new NotImplementedException();
-            using (var connection = new SqlConnection(_connectionString))
-            {
-
-            }
         }
 
         public void Delete()

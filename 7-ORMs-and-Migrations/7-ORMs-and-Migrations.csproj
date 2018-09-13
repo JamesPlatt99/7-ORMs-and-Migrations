@@ -86,6 +86,7 @@
     <Compile Include="DataBoard.cs" />
     <Compile Include="DataBoardRow.cs" />
     <Compile Include="Models\DatabaseObject.cs" />
+    <Compile Include="Models\EmployeeOverview.cs" />
     <Compile Include="Models\EmployeePensionData.cs" />
     <Compile Include="Models\Employees.cs" />
     <Compile Include="Models\IDataboardObject.cs" />
